@@ -1,0 +1,16 @@
+[package]
+name = "wasm-portal-engine"
+version = "0.1.0"
+authors = ["alngo <alngo@student.42.fr>"]
+description = "A sample project with wasm-pack"
+license = "MIT/Apache-2.0"
+edition = "2018"
+repository = "https://github.com/alngo/wasm-portal-engine.git"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
