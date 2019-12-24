@@ -20,6 +20,9 @@ impl Canvas {
             self.buffer[y * self.width + x] = color;
         }
     }
+    pub fn get_buffer(self) -> Vec<u32> {
+        self.buffer
+    }
 }
 
 #[wasm_bindgen]
