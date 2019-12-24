@@ -24,13 +24,17 @@ impl Canvas {
 
 #[wasm_bindgen]
 pub fn create_canvas(width: usize, height: usize) -> Canvas {
-    let canvas = Canvas {width: width, height: height, buffer: vec![0; width * height]};
+    let canvas = Canvas {
+        width: width,
+        height: height,
+        buffer: vec![0; width * height]
+    };
     canvas
 }
 
-// ===========
-// TEST SECTOR
-// ===========
+// ============
+// TEST SECTION
+// ============
 
 #[cfg(test)]
 mod canvas_tests {
