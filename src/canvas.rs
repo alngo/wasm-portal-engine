@@ -8,6 +8,20 @@ pub struct Canvas {
     buffer: Vec<u32>,
 }
 
+fn convert_slice_u8_to_vector_u8(s8: &[u8]) -> Vec<u8> {
+    s8.to_vec()
+}
+
+fn convert_vector_u32_to_vector_u8(vector: Vec<u32>) -> Vec<u8> {
+    // Convert Vec<u23> to Vec<u8> with align_to method
+    // https://doc.rust-lang.org/std/primitive.slice.html#method.align_to
+    // Avoid reconversion in javascript interface
+    let s8 = unsafe {
+        vector.align_to::<u8>().1
+    };
+    convert_slice_u8_to_vector_u8(s8)
+}
+
 #[wasm_bindgen]
 impl Canvas {
     pub fn resize(&mut self, width: usize, height: usize) {
@@ -20,8 +34,8 @@ impl Canvas {
             self.buffer[y * self.width + x] = color;
         }
     }
-    pub fn get_buffer(self) -> Vec<u32> {
-        self.buffer
+    pub fn get_bytes(self) -> Vec<u8> {
+        convert_vector_u32_to_vector_u8(self.buffer)
     }
 }
 

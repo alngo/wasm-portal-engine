@@ -2,7 +2,6 @@ extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
 
 mod canvas;
-mod player;
 
 #[wasm_bindgen]
 pub fn test_fill(canvas: &mut canvas::Canvas ) {
