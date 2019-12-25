@@ -22,15 +22,13 @@ check:
 
 clean:
 	@$(CARGO) clean
+	rm -rf pkg
 
 doc:
 	@$(CARGO) doc
 
 install: build
 	@$(CARGO) install
-
-publish:
-	@$(CARGO) publish
 
 run: build
 	@$(CARGO) run
@@ -41,5 +39,11 @@ test: build
 update:
 	@$(CARGO) update
 
-module:
+pkg:
 	wasm-pack build --scope $(USERNAME)
+
+pack:
+	wasm-pack pack
+
+publish:
+	wasm-pack publish
