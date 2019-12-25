@@ -1,13 +1,14 @@
 extern crate wasm_bindgen;
-
 use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
-extern {
-    pub fn alert(s: &str);
-}
+mod canvas;
 
 #[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
+pub fn test_fill(canvas: &mut canvas::Canvas ) {
+    for x in 0..canvas.width {
+        for y in 0..canvas.height {
+            canvas.put_pixel(0xFF_FF_00_FF, x, y);
+        }
+    }
 }
+

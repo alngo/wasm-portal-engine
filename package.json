@@ -1,0 +1,21 @@
+{
+  "name": "@alngo/wasm-portal-engine",
+  "collaborators": [
+    "alngo <alngo@student.42.fr>"
+  ],
+  "description": "A sample project with wasm-pack",
+  "version": "0.1.3",
+  "license": "MIT/Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alngo/wasm-portal-engine.git"
+  },
+  "files": [
+    "wasm_portal_engine_bg.wasm",
+    "wasm_portal_engine.js",
+    "wasm_portal_engine.d.ts"
+  ],
+  "module": "wasm_portal_engine.js",
+  "types": "wasm_portal_engine.d.ts",
+  "sideEffects": "false"
+}
