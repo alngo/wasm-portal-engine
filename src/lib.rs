@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-mod canvas;
-
-=======
 extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
 
@@ -15,5 +11,3 @@ pub fn test_fill(canvas: &mut canvas::Canvas ) {
         }
     }
 }
-
->>>>>>> 651de87cabbb92ad5616926f84ef95e0731d2b3d

@@ -3,11 +3,6 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Canvas {
-<<<<<<< HEAD
-    width: usize,
-    height: usize,
-    buffer: Vec<u32>
-=======
     pub width: usize,
     pub height: usize,
     buffer: Vec<u32>,
@@ -25,7 +20,6 @@ fn convert_vector_u32_to_vector_u8(vector: Vec<u32>) -> Vec<u8> {
         vector.align_to::<u8>().1
     };
     convert_slice_u8_to_vector_u8(s8)
->>>>>>> 651de87cabbb92ad5616926f84ef95e0731d2b3d
 }
 
 #[wasm_bindgen]
@@ -35,8 +29,6 @@ impl Canvas {
         self.height = height;
         self.buffer.resize(self.width * self.height, 0);
     }
-<<<<<<< HEAD
-=======
     pub fn put_pixel(&mut self, color: u32, x: usize, y: usize) {
         if (y * self.width + x) < (self.width * self.height) {
             self.buffer[y * self.width + x] = color;
@@ -45,22 +37,11 @@ impl Canvas {
     pub fn get_bytes(self) -> Vec<u8> {
         convert_vector_u32_to_vector_u8(self.buffer)
     }
->>>>>>> 651de87cabbb92ad5616926f84ef95e0731d2b3d
 }
 
 #[wasm_bindgen]
 pub fn create_canvas(width: usize, height: usize) -> Canvas {
-<<<<<<< HEAD
     let canvas = Canvas {width: width, height: height, buffer: vec![0; width * height]};
-    canvas
-}
-
-=======
-    let canvas = Canvas {
-        width: width,
-        height: height,
-        buffer: vec![0; width * height]
-    };
     canvas
 }
 
@@ -68,7 +49,6 @@ pub fn create_canvas(width: usize, height: usize) -> Canvas {
 // TEST SECTION
 // ============
 
->>>>>>> 651de87cabbb92ad5616926f84ef95e0731d2b3d
 #[cfg(test)]
 mod canvas_tests {
     use super::*;
@@ -85,8 +65,6 @@ mod canvas_tests {
         canvas.resize(10, 10);
         assert_eq!(canvas.buffer.len(), 10 * 10);
     }
-<<<<<<< HEAD
-=======
 
     #[test]
     fn it_should_have_a_colored_pixel() {
@@ -107,5 +85,4 @@ mod canvas_tests {
         assert_eq!(v8[2], 255);
         assert_eq!(v8[3], 255);
     }
->>>>>>> 651de87cabbb92ad5616926f84ef95e0731d2b3d
 }
