@@ -79,7 +79,7 @@ mod canvas_tests {
     }
 
     #[test]
-    fn it_should_have_a_match_bytes() {
+    fn it_should_match_a_colored_bytes() {
         let mut canvas = create_canvas(10, 10);
         assert_eq!(canvas.buffer.len(), 10 * 10);
         canvas.put_pixel(0xFF_FF_00_FF, 0, 0);
