@@ -15,7 +15,7 @@ fn convert_slice_u8_to_vector_u8(s8: &[u8]) -> Vec<u8> {
 fn convert_vector_u32_to_vector_u8(vector: Vec<u32>) -> Vec<u8> {
     // Convert Vec<u23> to Vec<u8> with align_to method
     // https://doc.rust-lang.org/std/primitive.slice.html#method.align_to
-    // Avoid reconversion in javascript interface
+    // Avoid conversion u32 -> u8 in javascript interface
     let s8 = unsafe {
         vector.align_to::<u8>().1
     };
@@ -76,5 +76,17 @@ mod canvas_tests {
         assert_eq!(canvas.buffer.len(), 10 * 10);
         canvas.put_pixel(0xFF_FF_00_FF, 0, 0);
         assert_eq!(canvas.buffer[0], 0xFF_FF_00_FF);
+    }
+
+    #[test]
+    fn it_should_have_a_match_bytes() {
+        let mut canvas = create_canvas(10, 10);
+        assert_eq!(canvas.buffer.len(), 10 * 10);
+        canvas.put_pixel(0xFF_FF_00_FF, 0, 0);
+        let v8 = canvas.get_bytes();
+        assert_eq!(v8[0], 255);
+        assert_eq!(v8[1], 0);
+        assert_eq!(v8[2], 255);
+        assert_eq!(v8[3], 255);
     }
 }
