@@ -1,3 +1,5 @@
+#[macro_use]
+extern crate more_asserts;
 extern crate wasm_bindgen;
 use wasm_bindgen::prelude::*;
 

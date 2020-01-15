@@ -20,32 +20,33 @@ impl Player {
         self.position.x += dx;
         self.position.y += dy;
     }
-    pub fn move_control(&mut self, forward: bool, backward: bool, left: bool, right: bool) -> Vec2 {
+    pub fn move_control(&mut self,
+        forward: bool,
+        backward: bool,
+        left: bool,
+        right: bool
+    ) -> Vec2 {
         let mut vec2 = Vec2::default();
-        let mut push = false;
         if forward {
             vec2.x += self.angle.cos() * 0.2;
             vec2.y += self.angle.sin() * 0.2;
-            push = true;
         }
         if backward {
             vec2.x -= self.angle.cos() * 0.2;
             vec2.y -= self.angle.sin() * 0.2;
-            push = true;
         }
         if left {
             vec2.x += self.angle.sin() * 0.2;
             vec2.y -= self.angle.cos() * 0.2;
-            push = true;
         }
         if right {
             vec2.x -= self.angle.sin() * 0.2;
             vec2.y += self.angle.cos() * 0.2;
-            push = true;
         }
-        let acceleration: f32 = if push { 0.4 } else { 0.2 };
-        self.velocity.x *= (1.0 - acceleration) + vec2.x * acceleration;
-        self.velocity.y *= (1.0 - acceleration) + vec2.y * acceleration;
+        let push = forward || backward || left || right;
+        let acc: f32 = if push { 0.4 } else { 0.2 };
+        self.velocity.x = self.velocity.x * (1.0 - acc) + vec2.x * acc;
+        self.velocity.y = self.velocity.y * (1.0 - acc) + vec2.y * acc;
         vec2
     }
 }
@@ -69,10 +70,18 @@ impl Default for Player {
 mod player_tests {
     use super::*;
     #[test]
-    fn it_should_move() {
+    fn it_should_move_position() {
         let mut player = Player::default();
         player.move_player(5.0, 5.0);
         assert_eq!(player.position.x, 5.0);
         assert_eq!(player.position.y, 5.0);
+    }
+
+    #[test]
+    fn it_should_move_velocity() {
+        let mut player = Player::default();
+        player.move_control(true, false, true, false);
+        assert_ne!(player.velocity.x, 0.0);
+        assert_ne!(player.velocity.y, 0.0);
     }
 }
