@@ -8,10 +8,18 @@ pub struct Sector {
     pub npoints: u32
 }
 
-impl Sector {
-    pub fn eg() {
+impl Default for Sector {
+    fn default() -> Self {
+        Self {
+            floor: 0.0,
+            ceil: 20.0,
+            vertex: Vec::new(),
+            neighbors: Vec::new(),
+            npoints: 0
+        }
     }
 }
+
 
 // ============
 // TEST SECTION
@@ -21,7 +29,10 @@ impl Sector {
 mod sector_tests {
     use super::*;
     #[test]
-    fn eg() {
-        assert_eq!(1, 1);
+    fn it_should_match_default_value() {
+        let sector = Sector::default();
+        assert_eq!(sector.floor, 0.0);
+        assert_eq!(sector.ceil, 20.0);
+        assert_eq!(sector.npoints, 0);
     }
 }
