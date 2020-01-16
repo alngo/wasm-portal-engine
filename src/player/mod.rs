@@ -26,28 +26,27 @@ impl Player {
         left: bool,
         right: bool
     ) -> Vec2 {
-        let vec2 = Vec2::default();
-        let (mut x, mut y) = vec2;
+        let mut vec2 = Vec2::default();
         if forward {
-            x += self.angle.cos() * 0.2;
-            y += self.angle.sin() * 0.2;
+            vec2.x += self.angle.cos() * 0.2;
+            vec2.y += self.angle.sin() * 0.2;
         }
         if backward {
-            x -= self.angle.cos() * 0.2;
-            y -= self.angle.sin() * 0.2;
+            vec2.x -= self.angle.cos() * 0.2;
+            vec2.y -= self.angle.sin() * 0.2;
         }
         if left {
-            x += self.angle.sin() * 0.2;
-            y -= self.angle.cos() * 0.2;
+            vec2.x += self.angle.sin() * 0.2;
+            vec2.y -= self.angle.cos() * 0.2;
         }
         if right {
-            x -= self.angle.sin() * 0.2;
-            y += self.angle.cos() * 0.2;
+            vec2.x -= self.angle.sin() * 0.2;
+            vec2.y += self.angle.cos() * 0.2;
         }
         let push = forward || backward || left || right;
         let acc: f32 = if push { 0.4 } else { 0.2 };
-        self.velocity.x = self.velocity.x * (1.0 - acc) + x * acc;
-        self.velocity.y = self.velocity.y * (1.0 - acc) + y * acc;
+        self.velocity.x = self.velocity.x * (1.0 - acc) + vec2.x * acc;
+        self.velocity.y = self.velocity.y * (1.0 - acc) + vec2.y * acc;
         vec2
     }
 }
