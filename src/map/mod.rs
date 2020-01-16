@@ -12,8 +12,11 @@ pub struct Map {
 
 impl Map {
     pub fn load(json_string: &str) {
-        let decode: Value = serde_json::from_str(&json_string)?;
-        print!("deserialized: {:?}", decode);
+        let decode: Value = match serde_json::from_str(json_string) {
+            Ok(f) => f,
+            Err(_e) => Value::default(),
+        };
+        println!("[deserialized]: {:?}", decode);
     }
 }
 
