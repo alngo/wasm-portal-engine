@@ -27,10 +27,7 @@ impl Default for Vec3 {
 }
 
 #[wasm_bindgen]
-pub struct Vec2 {
-    pub x: f32,
-    pub y: f32,
-}
+pub struct Vec2(f32, f32);
 
 impl Copy for Vec2 {}
 
@@ -42,10 +39,7 @@ impl Clone for Vec2 {
 
 impl Default for Vec2 {
     fn default() -> Self {
-        Self {
-            x: 0.0,
-            y: 0.0,
-        }
+        Self(0.0, 0.0)
     }
 }
 
@@ -71,7 +65,8 @@ mod vec2_tests {
     #[test]
     fn it_should_match_0_vec2() {
         let coord = Vec2::default();
-        assert_eq!(coord.x, 0.0);
-        assert_eq!(coord.y, 0.0);
+        let (x, y) = coord;
+        assert_eq!(x, 0.0);
+        assert_eq!(y, 0.0);
     }
 }
