@@ -1,7 +1,6 @@
-use std::fs;
 use crate::sector::Sector;
 use crate::player::Player;
-use serde_json::{Result, Value};
+use serde_json::{Value};
 
 pub struct Vertex(f32, f32);
 
@@ -12,15 +11,9 @@ pub struct Map {
 }
 
 impl Map {
-    pub fn load(&mut self, filename: &str) -> Map {
-        let contents = fs::read_to_string(filename)
-            .expect("Something went wrong reading the file");
-        let decode = serde_json::from_str(&contents).unwrap();
+    pub fn load(json_string: &str) {
+        let decode: Value = serde_json::from_str(&json_string)?;
         print!("deserialized: {:?}", decode);
-        Map {
-            vertexes: decode.vertexes,
-            sectors: decode.sectors,
-        }
     }
 }
 
@@ -29,5 +22,31 @@ mod map_tests {
     use super::*;
     #[test]
     fn it_should_match_default_value() {
+        let data = r#"
+        {
+            "vertexes": [
+            {0.0, 0.0},
+            {0.0, 5.0},
+            {5.0, 0.0},
+            {5.0, 5.0}
+        ],
+        "sectors": [
+            {"floor": 0.0, "ceil": 20.0, "vertexes": [0, 1, 2, 3]}
+        ],
+        "player": {
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "angle": 0.0,
+            "sector": 0
+        }
+    }"#;
+        Map::load(data);
     }
 }

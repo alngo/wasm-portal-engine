@@ -1,5 +1,3 @@
-use crate::utils::vector::Vec2;
-
 pub struct Sector {
     pub floor: f32,
     pub ceil: f32,
