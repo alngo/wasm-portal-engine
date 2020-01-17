@@ -13,7 +13,7 @@ pub struct Player {
 
 #[wasm_bindgen]
 impl Player {
-    pub fn move_player(&mut self, dx: f32, dy: f32) {
+    pub fn move_player(&mut self, dx: f64, dy: f64) {
         let _px = self.position.x;
         let _py = self.position.y;
 
@@ -44,7 +44,7 @@ impl Player {
             vec2.y += self.angle.cos() * 0.2;
         }
         let push = forward || backward || left || right;
-        let acc: f32 = if push { 0.4 } else { 0.2 };
+        let acc: f64 = if push { 0.4 } else { 0.2 };
         self.velocity.x = self.velocity.x * (1.0 - acc) + vec2.x * acc;
         self.velocity.y = self.velocity.y * (1.0 - acc) + vec2.y * acc;
         vec2

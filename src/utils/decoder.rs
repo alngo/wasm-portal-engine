@@ -1,56 +1,88 @@
 use crate::sector::Sector;
 use crate::player::Player;
 use crate::utils::vector::Vertex;
+use crate::utils::types::{Xy, Xyz};
+use crate::serde_json::{Value, Map};
 
-pub fn decode_vertexes(array: &serde_json::Value) -> Vec<Vertex> {
-    let mut vertexes = vec![];
-    let decomposed = array.as_array().unwrap();
-    for vec in decomposed {
-        let v = vec.as_array().unwrap();
-        let x = v[0].as_f64().unwrap();
-        let y = v[1].as_f64().unwrap();
-        vertexes.push(Vertex(x, y));
+mod decoder {
+    pub fn array_to_vector(array: &super::Value) -> &Vec<super::Value> {
+        array.as_array().unwrap()
     }
-    vertexes
+    pub fn object_to_map(array: &super::Value) -> &super::Map<String, super::Value> {
+        array.as_object().unwrap()
+    }
+    pub fn array2_to_xy(array: &super::Value) -> super::Xy {
+        let a = array.as_array().unwrap();
+        super::Xy(value_to_f64(&a[0]), value_to_f64(&a[1]))
+    }
+    pub fn array3_to_xyz(array: &super::Value) -> super::Xyz {
+        let a = array.as_array().unwrap();
+        super::Xyz(value_to_f64(&a[0]), value_to_f64(&a[1]), value_to_f64(&a[2]))
+    }
+    pub fn array_to_f64_vector(array: &super::Value) -> Vec<f64> {
+        let mut vector = array_to_vector(array);
+        let vec = vec![];
+        for val in vector {
+            vec.push(value_to_f64(val))
+        }
+        vec
+    }
+    pub fn array_to_i64_vector(array: &super::Value) -> Vec<i64> {
+        let mut vector = array_to_vector(array);
+        let vec = vec![];
+        for val in vector {
+            vec.push(value_to_i64(val))
+        }
+        vec
+    }
+    pub fn array_to_u64_vector(array: &super::Value) -> Vec<u64> {
+        let mut vector = array_to_vector(array);
+        let vec = vec![];
+        for val in vector {
+            vec.push(value_to_u64(val))
+        }
+        vec
+    }
+    pub fn value_to_f64(val: &super::Value) -> f64 {
+        val.as_f64().unwrap()
+    }
+    pub fn value_to_u64(val: &super::Value) -> u64 {
+        val.as_u64().unwrap()
+    }
+    pub fn value_to_i64(val: &super::Value) -> i64 {
+        val.as_i64().unwrap()
+    }
 }
 
-pub fn decode_sectors(array: &serde_json::Value) -> Vec<Sector> {
-    let mut sectors = vec![];
-    let decomposed = array.as_array().unwrap();
-    for sec in decomposed {
-        let floor = sec["floor"].as_f64().unwrap();
-        let ceil = sec["ceil"].as_f64().unwrap();
-        let mut vertexes_id = vec![];
-        for id in sec["vertexes_id"].as_array().unwrap() {
-            vertexes_id.push(id.as_u64().unwrap());
+pub mod interface {
+    pub fn vertexes(array: &serde_json::Value) -> Vec<super::Vertex> {
+        let mut vertexes = vec![];
+        for data in super::decoder::array_to_vector(array) {
+            vertexes.push(super::decoder::array2_to_xy(data));
         }
-        let mut neighbors_id = vec![];
-        for id in sec["neighbors_id"].as_array().unwrap() {
-            vertexes_id.push(id.as_u64().unwrap());
-        }
-        sectors.push(
-            Sector {
-                floor: floor,
-                ceil: ceil,
-                vertexes_id: vertexes_id,
-                neighbors_id: neighbors_id
-            }
-        )
+        vertexes
     }
-    sectors
-}
+    pub fn sectors(array: &serde_json::Value) -> Vec<super::Sector> {
+        let mut sectors = vec![];
+        let decomposed = super::decoder::array_to_vector(array);
+        for data in decomposed {
+            let mut sector = super::Sector::default();
+            sector.floor = super::decoder::value_to_f64(&data["floor"]);
+            sector.ceil = super::decoder::value_to_f64(&data["ceil"]);
+            sector.vertexes_id = super::decoder::array_to_u64_vector(&data["vertexes_id"]);
+            sector.neighbors_id = super::decoder::array_to_i64_vector(&data["neighbors_id"]);
+            sectors.push(sector);
+        }
+        sectors
+    }
+    pub fn player(object: &serde_json::Value) -> super::Player {
+        let mut player = super::Player::default();
+        let data = super::decoder::object_to_map(object);
+        player.position = super::decoder::array3_to_xyz(&data["position"]);
+        player.velocity = super::decoder::array2_to_xy(&data["velocity"]);
+        player.angle = super::decoder::value_to_f64(&data["angle"]);
+        player.sector = super::decoder::value_to_u64(&data["sector"]);
+        player
+    }
 
-pub fn decode_player(object: &serde_json::Value) -> Player {
-    let mut player = Player::default();
-    let decomposed = object.as_object().unwrap();
-    let position = decomposed["position"].as_array().unwrap();
-    player.position.x = position[0].as_f64().unwrap();
-    player.position.y = position[1].as_f64().unwrap();
-    player.position.z = position[2].as_f64().unwrap();
-    let velocity = decomposed["velocity"].as_array().unwrap();
-    player.velocity.x = velocity[0].as_f64().unwrap();
-    player.velocity.y = velocity[1].as_f64().unwrap();
-    player.angle = decomposed["angle"].as_f64().unwrap();
-    player.sector = decomposed["angle"].as_u64().unwrap();
-    player
 }
