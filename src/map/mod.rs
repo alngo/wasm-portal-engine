@@ -1,11 +1,11 @@
 use crate::sector::Sector;
 use crate::player::Player;
-use crate::utils::vector::Vertex;
+use crate::utils::types::Xy;
 use serde_json::{Value, Error};
-use crate::utils::decoder::{interface};
+use crate::utils::decode;
 
 pub struct Map {
-    pub vertexes: Vec<Vertex>,
+    pub vertexes: Vec<Xy>,
     pub sectors: Vec<Sector>,
     pub player: Player
 }
@@ -13,9 +13,9 @@ pub struct Map {
 impl Map {
     pub fn load(json_string: &str) -> Result<Map, Error> {
         let decode: Value = serde_json::from_str(json_string)?;
-        let vertexes: Vec<Vertex> = interface::vertexes(&decode["vertexes"]);
-        let sectors: Vec<Sector> = interface::sectors(&decode["sectors"]);
-        let player: Player = interface::player(&decode["player"]);
+        let vertexes: Vec<Xy> = decode::vertexes(&decode["vertexes"]);
+        let sectors: Vec<Sector> = decode::sectors(&decode["sectors"]);
+        let player: Player = decode::player(&decode["player"]);
         Ok(
            Map {
                 vertexes: vertexes,
@@ -58,8 +58,8 @@ mod map_tests {
                 }
             ],
             "player": {
-                "position": [0.0, 0,0, 0.0],
-                "velocity": [0.0, 0.0],
+                "position": [1.0, 2,0, 0.0],
+                "velocity": [0.0, 0.0, 0.0],
                 "angle": 0.0,
                 "sector": 0
             }
