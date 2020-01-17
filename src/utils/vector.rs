@@ -3,9 +3,9 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Vec3 {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
 }
 
 impl Copy for Vec3 {}
@@ -28,8 +28,8 @@ impl Default for Vec3 {
 
 #[wasm_bindgen]
 pub struct Vec2 {
-    pub x: f32,
-    pub y: f32
+    pub x: f64,
+    pub y: f64
 }
 
 impl Copy for Vec2 {}
@@ -48,6 +48,8 @@ impl Default for Vec2 {
         }
     }
 }
+
+pub struct Vertex(pub f64, pub f64);
 
 // ============
 // TEST SECTION

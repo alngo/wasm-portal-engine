@@ -7,8 +7,8 @@ use crate::utils::vector::Vec2;
 pub struct Player {
     pub position: Vec3,
     pub velocity: Vec3,
-    pub angle: f32,
-    pub sector: u32
+    pub angle: f64,
+    pub sector: u64
 }
 
 #[wasm_bindgen]
