@@ -3,6 +3,7 @@ use crate::player::Player;
 use crate::utils::types::{Xy, Xyz};
 use crate::serde_json::{Value, Map};
 
+#[allow(dead_code)]
 mod convert {
     pub fn array_to_vector(array: &super::Value) -> &Vec<super::Value> {
         array.as_array().unwrap()
@@ -19,7 +20,7 @@ mod convert {
         super::Xyz(value_to_f64(&a[0]), value_to_f64(&a[1]), value_to_f64(&a[2]))
     }
     pub fn array_to_f64_vector(array: &super::Value) -> Vec<f64> {
-        let mut vector = array_to_vector(array);
+        let vector = array_to_vector(array);
         let mut vec = vec![];
         for val in vector {
             vec.push(value_to_f64(val))
@@ -27,7 +28,7 @@ mod convert {
         vec
     }
     pub fn array_to_i64_vector(array: &super::Value) -> Vec<i64> {
-        let mut vector = array_to_vector(array);
+        let vector = array_to_vector(array);
         let mut vec = vec![];
         for val in vector {
             vec.push(value_to_i64(val))
@@ -35,7 +36,7 @@ mod convert {
         vec
     }
     pub fn array_to_u64_vector(array: &super::Value) -> Vec<u64> {
-        let mut vector = array_to_vector(array);
+        let vector = array_to_vector(array);
         let mut vec = vec![];
         for val in vector {
             vec.push(value_to_u64(val))
@@ -53,6 +54,7 @@ mod convert {
     }
 }
 
+#[allow(dead_code)]
 pub fn vertexes(array: &serde_json::Value) -> Vec<Xy> {
     let mut vertexes = vec![];
     for data in convert::array_to_vector(array) {
@@ -60,6 +62,8 @@ pub fn vertexes(array: &serde_json::Value) -> Vec<Xy> {
     }
     vertexes
 }
+
+#[allow(dead_code)]
 pub fn sectors(array: &serde_json::Value) -> Vec<Sector> {
     let mut sectors = vec![];
     let decomposed = convert::array_to_vector(array);
@@ -73,6 +77,8 @@ pub fn sectors(array: &serde_json::Value) -> Vec<Sector> {
     }
     sectors
 }
+
+#[allow(dead_code)]
 pub fn player(object: &serde_json::Value) -> Player {
     let mut player = Player::default();
     let data = convert::object_to_map(object);

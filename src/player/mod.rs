@@ -12,7 +12,7 @@ pub struct Player {
 #[wasm_bindgen]
 impl Player {
     pub fn move_player(&mut self, dx: f64, dy: f64) {
-        let Xyz(mut _px, mut py, _) = self.position;
+        let Xyz(mut _px, mut _py, _) = self.position;
 
         self.position.0 += dx;
         self.position.1 += dy;

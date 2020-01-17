@@ -11,6 +11,7 @@ pub struct Map {
 }
 
 impl Map {
+    #[allow(dead_code)]
     pub fn load(json_string: &str) -> Result<Map, Error> {
         let decode: Value = serde_json::from_str(json_string)?;
         let vertexes: Vec<Xy> = decode::vertexes(&decode["vertexes"]);
@@ -64,7 +65,7 @@ mod map_tests {
                 "sector": 0
             }
         }"#;
-        let map = Map::load(data);
+        let _map = Map::load(data);
         //Map::untyped_example();
     }
 }
