@@ -34,7 +34,7 @@ run: build
 	@$(CARGO) run
 
 test: build
-	@$(CARGO) test
+	@$(CARGO) test -- --nocapture
 
 update:
 	@$(CARGO) update
