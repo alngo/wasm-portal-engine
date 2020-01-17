@@ -10,7 +10,7 @@ Rust portal engine
 		{5.0, 0.0}, {5.0, 5.0}
 	],
 	"sectors": [
-		{"floor": 0.0, "ceil": 20.0, "vertexes": [0, 1, 2, 3]}
+		{"floor": 0.0, "ceil": 20.0, "vertexes_id": [0, 1, 2, 3]}
 	],
 	"player": {
 		"position": {

@@ -1,6 +1,7 @@
 use crate::sector::Sector;
 use crate::player::Player;
 use serde_json::{Value, Error};
+use crate::decode;
 
 pub struct Vertex(f64, f64);
 
@@ -24,6 +25,27 @@ pub fn decode_vertexes(array: &serde_json::Value) -> Vec<Vertex> {
 
 pub fn decode_sectors(array: &serde_json::Value) -> Vec<Sector> {
     let mut sectors = vec![];
+    let decomposed = array.as_array().unwrap();
+    for sec in decomposed {
+        let floor = sec["floor"].as_f64().unwrap();
+        let ceil = sec["ceil"].as_f64().unwrap();
+        let mut vertexes_id = vec![];
+        for id in sec["vertexes_id"].as_array().unwrap() {
+            vertexes_id.push(id.as_u64().unwrap());
+        }
+        let mut neighbors_id = vec![];
+        for id in sec["neighbors_id"].as_array().unwrap() {
+            vertexes_id.push(id.as_u64().unwrap());
+        }
+        sectors.push(
+            Sector {
+                floor: floor,
+                ceil: ceil,
+                vertexes_id: vertexes_id,
+                neighbors_id: neighbors_id
+            }
+        )
+    }
     sectors
 }
 
@@ -71,7 +93,12 @@ mod map_tests {
                 [5.0, 5.0]
             ],
             "sectors": [
-                {"floor": 0.0, "ceil": 20.0, "vertexes": [0, 1, 2, 3]}
+                {
+                    "floor": 0.0,
+                    "ceil": 20.0,
+                    "vertexes_id": [0, 1, 2, 3],
+                    "neighbors_id": [-1, -1, -1, -1]
+                }
             ],
             "player": {
                 "position": [0.0, 0,0, 0.0],
