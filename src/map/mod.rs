@@ -10,15 +10,24 @@ pub struct Map {
     pub player: Player
 }
 
+#[allow(dead_code)]
 impl Map {
-    #[allow(dead_code)]
-    pub fn load(json_string: &str) -> Result<Map, Error> {
-        let decode: Value = serde_json::from_str(json_string)?;
+    fn decode_data(data: &str) -> Result<Map, Error> {
+        let decode: Value = serde_json::from_str(data)?;
         let mut map = Map::default();
         map.vertexes = decode::vertexes(&decode["vertexes"]);
         map.sectors = decode::sectors(&decode["sectors"]);
         map.player = decode::player(&decode["player"]);
         Ok(map)
+    }
+    pub fn load(json_string: &str) -> Map {
+        match Map::decode_data(json_string) {
+            Ok(map) => map,
+            Err(e) => {
+                println!("An error has occured in decode_data: {}", e);
+                Map::default()
+            }
+        }
     }
 }
 
@@ -75,10 +84,7 @@ mod map_tests {
                 "sector": 8
             }
         }"#;
-        let map = match Map::load(data) {
-            Ok(item) => item,
-            Err(_) => Map::default()
-        };
+        let map = Map::load(data);
         assert_eq!(map.vertexes.len(), 4);
         assert_eq!(map.sectors.len(), 1);
         assert_eq!(map.sectors[0].floor, 0.0);
