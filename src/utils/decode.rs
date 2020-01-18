@@ -20,25 +20,22 @@ mod convert {
         super::Xyz(value_to_f64(&a[0]), value_to_f64(&a[1]), value_to_f64(&a[2]))
     }
     pub fn array_to_f64_vector(array: &super::Value) -> Vec<f64> {
-        let vector = array_to_vector(array);
         let mut vec = vec![];
-        for val in vector {
+        for val in array_to_vector(array) {
             vec.push(value_to_f64(val))
         }
         vec
     }
     pub fn array_to_i64_vector(array: &super::Value) -> Vec<i64> {
-        let vector = array_to_vector(array);
         let mut vec = vec![];
-        for val in vector {
+        for val in array_to_vector(array) {
             vec.push(value_to_i64(val))
         }
         vec
     }
     pub fn array_to_u64_vector(array: &super::Value) -> Vec<u64> {
-        let vector = array_to_vector(array);
         let mut vec = vec![];
-        for val in vector {
+        for val in array_to_vector(array) {
             vec.push(value_to_u64(val))
         }
         vec
