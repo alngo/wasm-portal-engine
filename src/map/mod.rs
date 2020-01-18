@@ -14,16 +14,11 @@ impl Map {
     #[allow(dead_code)]
     pub fn load(json_string: &str) -> Result<Map, Error> {
         let decode: Value = serde_json::from_str(json_string)?;
-        let vertexes: Vec<Xy> = decode::vertexes(&decode["vertexes"]);
-        let sectors: Vec<Sector> = decode::sectors(&decode["sectors"]);
-        let player: Player = decode::player(&decode["player"]);
-        Ok(
-           Map {
-                vertexes: vertexes,
-                sectors: sectors,
-                player: player
-            }
-        )
+        let mut map = Map::default();
+        map.vertexes = decode::vertexes(&decode["vertexes"]);
+        map.sectors = decode::sectors(&decode["sectors"]);
+        map.player = decode::player(&decode["player"]);
+        Ok(map)
     }
 }
 
