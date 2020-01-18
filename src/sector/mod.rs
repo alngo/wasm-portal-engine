@@ -1,11 +1,8 @@
-use crate::utils::vector::Vec2;
-
 pub struct Sector {
-    pub floor: f32,
-    pub ceil: f32,
-    pub vertex: Vec<Vec2>,
-    pub neighbors: Vec<u8>,
-    pub npoints: u32
+    pub floor: f64,
+    pub ceil: f64,
+    pub vertexes_id: Vec<u64>,
+    pub neighbors_id: Vec<i64>,
 }
 
 impl Default for Sector {
@@ -13,13 +10,11 @@ impl Default for Sector {
         Self {
             floor: 0.0,
             ceil: 20.0,
-            vertex: Vec::new(),
-            neighbors: Vec::new(),
-            npoints: 0
+            vertexes_id: Vec::new(),
+            neighbors_id: Vec::new(),
         }
     }
 }
-
 
 // ============
 // TEST SECTION
@@ -33,6 +28,5 @@ mod sector_tests {
         let sector = Sector::default();
         assert_eq!(sector.floor, 0.0);
         assert_eq!(sector.ceil, 20.0);
-        assert_eq!(sector.npoints, 0);
     }
 }

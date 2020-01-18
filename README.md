@@ -1,3 +1,25 @@
 ### wasm-portal-engine :bulb:
 
 Rust portal engine
+
+### Map exemple
+```
+{
+	"vertexes": [
+		[0.0, 0.0],
+		[0.0, 5.0],
+		[5.0, 0.0],
+		[5.0, 5.0]
+	],
+	"sectors": [
+		{"floor": 0.0, "ceil": 20.0, "vertexes_id": [0, 1, 2, 3], "neighbors": []}
+	],
+	"player": {
+		"position": [0.0, 0.0, 0.0],
+		"velocity": [0.0, 0.0, 0.0],
+		"angle": 0.0,
+		"sector": 0
+	}
+}
+```
+
